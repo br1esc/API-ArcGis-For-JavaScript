@@ -67,8 +67,8 @@ require([
 				/*
                  * Step: update the Legend
 				*/
-        legendLayers = arcgisUtils.getLegendLayers(response);
-            var dijitLegend = new Legend({
+                legendLayers = arcgisUtils.getLegendLayers(response);
+                var dijitLegend = new Legend({
                     map: mapMain,
                     arrangement: Legend.ALIGN_RIGHT,
                     layerInfos: legendLayers
