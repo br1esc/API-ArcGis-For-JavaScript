@@ -15,14 +15,14 @@ require([
         "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/layers/FeatureLayer",
         "esri/dijit/Legend",
-
+        "esri/dijit/BasemapGallery",
         "dojo/ready",
         "dojo/parser",
         "dojo/on",
 
         "dijit/layout/BorderContainer",
         "dijit/layout/ContentPane"],
-    function (Map, arcgisUtils, Extent, ArcGISDynamicMapServiceLayer, FeatureLayer, Legend,
+    function (Map, arcgisUtils, Extent, ArcGISDynamicMapServiceLayer, FeatureLayer, Legend,BasemapGallery,
               ready, parser, on,
               BorderContainer, ContentPane) {
 // @formatter:on
@@ -50,21 +50,34 @@ require([
              * Step: Create a map using a web map ID
             */
 
-            // arcgisUtils.createMap(webmapId,"cpCenter").then(function(response){
-
+             arcgisUtils.createMap(webmapId,"cpCenter").then(function(response){
+                mapMain = response.map;
+             });
 				/*
 				 * Step: Get the map from the response
 				*/
-				
+			var basemapGallery = new BasemapGallery({
+              showArcGISBasemaps: true,
+               map: mapMain
+                }, "basemapGallery");
+
+            basemapGallery.startup();
+ 
 				
 				/*
                  * Step: update the Legend
 				*/
+        legendLayers = arcgisUtils.getLegendLayers(response);
+            var dijitLegend = new Legend({
+                    map: mapMain,
+                    arrangement: Legend.ALIGN_RIGHT,
+                    layerInfos: legendLayers
+                }, "divLegend");
+                dijitLegend.startup();
 
+             });   
 
-            // });   
-
-
+            /*
             //create a map
             mapMain = new Map("cpCenter", {
                 basemap: "satellite",
@@ -91,8 +104,8 @@ require([
                 }, "divLegend");
                 dijitLegend.startup();
             });
+            */
 
-
-        });
+        //});
 
     });
